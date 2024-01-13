@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Export</title>
+</head>
+<body>
+ <div id="control-panel">
+        <a href="/urls">URL</a>
+        <a href="/scrape">Scrape</a>
+        <a href="/split">Split</a>
+        <a href="/superfluous">Superfluous</a>
+        <a href="/keywords">Keywords</a>
+        <a href="/clean">Clean</a>
+        <a href="/changes">Changes</a>
+        <a href="/report">Report</a>
+       <a href="/export">Export</a>
+    </div>
+    <h1>Export Page</h1>
+ <div id="download-container">
+    <h2>Download Report</h2>
+    <ul>
+        <li><a href="/download_report/json">Download JSON</a></li>
+        <li><a href="/download_report/csv">Download CSV</a></li>
+        <li><a href="/download_report/xml">Download XML</a></li>
+    </ul>
+ </div>
+</body>
+</html>

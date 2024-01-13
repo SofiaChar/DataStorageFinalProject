@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Keyword Report</title>
+
+    <!-- Include D3.js -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <div id="control-panel">
+        <a href="/urls">URL</a>
+        <a href="/scrape">Scrape</a>
+        <a href="/split">Split</a>
+        <a href="/superfluous">Superfluous</a>
+        <a href="/keywords">Keywords</a>
+        <a href="/clean">Clean</a>
+        <a href="/changes">Changes</a>
+        <a href="/report">Report</a>
+        <a href="/export">Export</a>
+     </div>
+    <h1>Keyword Report</h1>
+
+    <!-- Container for the graph -->
+    <div id="graph-container"></div>
+
+    <script>
+
+    // Data passed from Flask
+    var keywordData = {{ pages_data | default('[]') | tojson | safe }};
+
+    // D3.js code to create an interactive bar chart
+    var margin = {top: 20, right: 30, bottom: 80, left: 60}, // Increased bottom margin for better visibility
+        width = 800 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    var svg = d3.select("#graph-container")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var x = d3.scaleBand()
+        .range([0, width])
+        .padding(0.1);
+
+    var y = d3.scaleLinear()
+        .range([height, 0]);
+
+    x.domain(keywordData.map(function(d) { return d.Keyword; }));
+    y.domain([0, d3.max(keywordData, function(d) { return d.Appearances; })]);
+
+    svg.selectAll("rect")
+        .data(keywordData)
+        .enter().append("rect")
+        .attr("x", function(d) { return x(d.Keyword); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.Appearances); })
+        .attr("height", function(d) { return height - y(d.Appearances); })
+        .attr("fill", "#4CAF50");
+
+    // Add x-axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "rotate(-45)")
+        .style("text-anchor", "end")
+        .attr("dx", "-0.8em") // Adjust the horizontal position
+        .attr("dy", "0.15em"); // Adjust the vertical position
+
+    // Add y-axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
+    </script>
+</body>
+</html>

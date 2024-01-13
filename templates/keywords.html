@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Keywords</title>
+</head>
+<body>
+    <div id="control-panel">
+        <a href="/urls">URL</a>
+        <a href="/scrape">Scrape</a>
+        <a href="/split">Split</a>
+        <a href="/superfluous">Superfluous</a>
+        <a href="/keywords">Keywords</a>
+        <a href="/clean">Clean</a>
+        <a href="/changes">Changes</a>
+        <a href="/report">Report</a>
+        <a href="/export">Export</a>
+    </div>
+    <h1>Keywords</h1>
+ <form action="/keywords" method="post">
+        <label for="change_from">Change From:</label>
+        <input type="text" id="change_from" name="change_from" required>
+
+        <label for="change_to">Change To:</label>
+        <input type="text" id="change_to" name="change_to" required>
+
+        <button type="submit">Insert</button>
+    </form>
+
+    <form action="/superfluous" method="post">
+    <label for="new_superfluous">New Superfluous Word:</label>
+        <p>Mind that: Most of the punctuation is cleaned automatically</p>
+    <input type="text" id="new_superfluous" name="new_superfluous" required>
+
+    <button type="submit">Insert</button>
+</form>
+
+    <table border="1", id="table3">
+        <thead>
+            <tr>
+                <th>KEYWORD</th>
+                <th>OCCURRENCES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages_data %}
+            <tr>
+                <td>{{ page[2] }}</td>
+                <td>{{ page[3] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

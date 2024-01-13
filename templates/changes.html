@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Changes</title>
+</head>
+<body>
+    <div id="control-panel">
+        <a href="/urls">URL</a>
+        <a href="/scrape">Scrape</a>
+        <a href="/split">Split</a>
+        <a href="/superfluous">Superfluous</a>
+        <a href="/keywords">Keywords</a>
+        <a href="/clean">Clean</a>
+        <a href="/changes">Changes</a>
+        <a href="/report">Report</a>
+        <a href="/export">Export</a>
+    </div>
+    <h1>Changes</h1>
+ <form action="/changes" method="post">
+        <label for="change_from">Change From:</label>
+        <input type="text" id="change_from" name="change_from" required>
+
+        <label for="change_to">Change To:</label>
+        <input type="text" id="change_to" name="change_to" required>
+
+        <button type="submit">Insert</button>
+ </form>
+    <table border="1", id="table2">
+        <thead>
+            <tr>
+                <th>CHANGE FROM</th>
+                <th>CHANGE TO</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages_data %}
+            <tr>
+                <td>{{ page[1] }}</td>
+                <td>{{ page[2] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
